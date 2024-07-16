@@ -73,7 +73,7 @@
             "cli":
             {
                 "org": "kitadai31",
-                "repo": "rvcli"
+                "repo": "revanced-cli"
             },
             "patches":
             {
@@ -139,7 +139,7 @@
             "cli":
             {
                 "org": "kitadai31",
-                "repo": "rvcli"
+                "repo": "revanced-cli"
             },
             "patches":
             {
