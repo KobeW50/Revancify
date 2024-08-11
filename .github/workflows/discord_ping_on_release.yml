@@ -17,4 +17,4 @@ jobs:
           description: |
             Version `${{ github.event.release.tag_name }}`
             Click [here](${{ github.event.release.html_url }}) to download!
-          color: 'null'
+          color: null
