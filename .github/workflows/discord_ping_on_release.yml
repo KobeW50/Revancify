@@ -14,4 +14,6 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           nodetail: true
           title: "App ${{ github.event.release.tag_name }} has been released!"
+          description: |
+            Download it from [here]( ${{github.event.repository.html_url }}/releases/tag/${{ github.event.release.tag_name }})!
           color: 0xff91a4
