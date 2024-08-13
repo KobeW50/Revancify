@@ -8,8 +8,9 @@ jobs:
   notify-discord:
     runs-on: ubuntu-latest
     steps:
-      - uses: sarisia/actions-status-discord@v1
+      - uses: sarisia/actions-status-discord@v1.15.0-pre.0
         if: always()
+        id: webhook
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
           nodetail: true
@@ -17,4 +18,21 @@ jobs:
           description: |
             Version `${{ github.event.release.tag_name }}`
             Click [here](${{ github.event.release.html_url }}) to download!
-          color: null
+          color: 0x010101
+  
+- run: npm install axios
+- uses: actions/github-script@v7
+  env:
+    WEBHOOK_PAYLOAD: ${{ steps.webhook.outputs.payload }}
+    WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+  with:
+    script: |
+      const axios = require("axios")
+
+      const { WEBHOOK_PAYLOAD, WEBHOOK_URL } = process.env
+
+      const payload = JSON.parse(WEBHOOK_PAYLOAD)
+
+      delete payload.embeds[0].color
+      
+      axios.post(WEBHOOK_URL, payload)
