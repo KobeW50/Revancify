@@ -8,18 +8,20 @@ jobs:
   notify-discord:
     runs-on: ubuntu-latest
     steps:
-      - uses: sarisia/actions-status-discord@v1.15.0-pre.0
+      - uses: sarisia/actions-status-discord@v1
         if: always()
         id: webhook
         with:
           ack_no_webhook: true
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: ReVanced Extended
           nodetail: true
-          title: "App `${{ github.event.release.tag_name }}` has been released!"
+          notimestamp: true
+          content: "<@&1271197877724643461>"
+          title: "Patches `${{ github.event.release.tag_name }}` has been released!"
           description: |
-            Version `${{ github.event.release.tag_name }}`
-            Click [here](${{ github.event.release.html_url }}) to download!
-          color: 0x010101  
+            Click [here](${{ github.event.release.html_url }}) to read the changelog and release notes.
+          color: 0xff5252
       - run: npm install axios
       - uses: actions/github-script@v7
         env:
@@ -28,7 +30,10 @@ jobs:
         with:
           script: |
             const axios = require("axios")
+
             const { WEBHOOK_PAYLOAD, WEBHOOK_URL } = process.env
+
             const payload = JSON.parse(WEBHOOK_PAYLOAD)
+
             delete payload.embeds[0].color
             axios.post(WEBHOOK_URL, payload)
