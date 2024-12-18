@@ -14,14 +14,16 @@ jobs:
         with:
           ack_no_webhook: true
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          username: ReVanced Extended
           nodetail: true
           notimestamp: true
+
+          username: ReVanced Extended
           content: "<@&1271197877724643461>"
           title: "Patches `${{ github.event.release.tag_name }}` has been released!"
           description: |
             Click [here](${{ github.event.release.html_url }}) to read the changelog and release notes.
           color: 0xff5252
+
       - run: npm install axios
       - uses: actions/github-script@v7
         env:
