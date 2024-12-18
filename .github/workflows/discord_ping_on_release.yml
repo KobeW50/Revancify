@@ -11,6 +11,16 @@ jobs:
       - uses: sarisia/actions-status-discord@v1
         if: always()
         id: webhook
+        with:
+          ack_no_webhook: true
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          nodetail: true
+          notimestamp: true
+
+          username: ReVanced Extended
+          title: "Patches `${{ github.event.release.tag_name }}` has been released!"
+          description: |
+            Click [here](${{ github.event.release.html_url }}) to read the changelog and release notes.
 
       - run: npm install axios
       - uses: actions/github-script@v7
