@@ -10,9 +10,9 @@ jobs:
     steps:
       - uses: sarisia/actions-status-discord@v1
         if: always()
-        id: webhook
+        id: webhook # set id to reference output payload later
         with:
-          ack_no_webhook: true
+          ack_no_webhook: true # suppress warning
           nodetail: true
           notimestamp: true
           
@@ -35,5 +35,8 @@ jobs:
 
             const payload = JSON.parse(WEBHOOK_PAYLOAD)
 
+            // remove the color field to make it transparent
             delete payload.embeds[0].color
+
+            // send to Discord 
             axios.post(WEBHOOK_URL, payload)
